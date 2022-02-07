@@ -5,8 +5,7 @@ import Link from 'next/link'
 import Grid from '@mui/material/Grid';
 import {Card, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
-// @ts-ignore
-import {useLocation} from "react-router-dom";
+
 
 type IProps = {
   product: any
@@ -34,15 +33,15 @@ let Product: React.FC<IProps> = ({product}: IProps) => {
             sx={{height: "194px", objectFit: "contain"}}
           />
           <CardContent>
-            <Link href={{search: `?search=${product.asin}`}}>
-              <a> <Typography component='h6'>
+            <Link href={`/[singleProduct]`} as={`/${product.asin}` }>
+              <a target="_blank">
+                <Typography component='h6'>
                 {product.name}
               </Typography>
               </a>
-
             </Link>
             <Typography variant='body1'>
-              Prise: {product.price}
+              Prise: {product.price}$
             </Typography>
             <div>
               {product.asin}
@@ -51,13 +50,8 @@ let Product: React.FC<IProps> = ({product}: IProps) => {
             <div>
               {product.bsr_category}
             </div>
-            {/*<div>*/}
-            {/*    {product.link}*/}
-            {/*</div>*/}
-
           </CardContent>
         </div>
-
         <CardActions>
           <Button variant='contained'>
             Buy
@@ -72,27 +66,3 @@ let Product: React.FC<IProps> = ({product}: IProps) => {
 export default Product;
 
 
-// <div>
-//     <Link to={{ search: `?search=${product.asin}` }}>
-//         <div>
-//             <img src={product?.img} alt={'pic'} />
-//         </div>
-//         <div>
-//             {product.name}
-//         </div>
-//         <div>
-//            Prise: {product.price}
-//         </div>
-//         <div>
-//             {product.asin}
-//         </div>
-//
-//         <div>
-//             {product.bsr_category}
-//         </div>
-//         <div>
-//             {product.link}
-//         </div>
-//
-//     </Link>
-// </ div>

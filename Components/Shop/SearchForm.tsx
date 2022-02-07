@@ -1,18 +1,16 @@
-import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
-import * as yup from 'yup'
-import {useFormik} from 'formik';
-import {useDispatch, useSelector} from 'react-redux';
-// @ts-ignore
-import {actions} from '../redux/products-Reducer.ts';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 // @ts-ignore
 import TextField from '@mui/material/TextField';
 // @ts-ignore
 import style from './style.module.css'
 import Button from "@mui/material/Button";
-import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
-import {useTranslation} from "react-i18next";
-import {ArrayParam, StringParam, useQueryParam, useQueryParams, withDefault,} from 'use-query-params';
-import {AppStateType} from "../redux/redux-store";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+// @ts-ignore
+import { useTranslation } from "react-i18next";
+import {useRouter} from "next/router";
+
+
 
 interface IQuery {
   category?: string;
@@ -31,22 +29,22 @@ interface SearchFormPropsType {
 
 const SearchForm: React.FC<SearchFormPropsType> = ({
                                                      formik,
-                                                     query,
-                                                     setQuery,
+
                                                      changeUrl,
                                                      filteredCategorySelector,
                                                      categoriesData,
                                                    }: SearchFormPropsType) => {
-  const dispatch = useDispatch()
+
   const [skipFirstRender, setSkipFirstRender] = useState(false)
+  console.log(formik)
 
 
-  const {values, errors, touched, handleBlur, isValid, handleSubmit, dirty} = formik
+  const { values, errors, touched, handleBlur, isValid, handleSubmit, dirty } = formik
 
 
   useEffect(() => {
     if (skipFirstRender) {
-      handleSubmit()
+      formik.handleSubmit()
     } else {
       setSkipFirstRender(true)
     }
@@ -65,32 +63,19 @@ const SearchForm: React.FC<SearchFormPropsType> = ({
     height: "100%",
     transitionDuration: '0.3s',
   }
-  // const [productQuery, setProductQuery] = useQueryParam('product', StringParam)
-  // const [categoryQuery, setCategoryQuery] = useQueryParam('category', StringParam)
 
-  const {t} = useTranslation();
-  // const [query, setQuery] = useQueryParams({
-  //   product: StringParam,
-  //   category: StringParam,
-  // });
+  const { t } = useTranslation();
 
-  // const searchData = useSelector((state: AppStateType) => state.products.search)
-  // useEffect(() => {
-  //   // setProductQuery(searchData)
-  //   setQuery({ product: searchData })
-  //   // setProductQueryParams(searchData)
-  // }, [searchData])
-
-  //
-  // const formikHandleChange = (e) => {
-  //   setNewField({ ...prevState, [e.target.name]: e.target.value })
-  // }
+  const router = useRouter();
 
   const handleFieldChange = (e: any, fieldName: string) => {
     formik.handleChange(e)
-    setQuery({ [fieldName]: e.target.value })
+    // router.push({
+    //   pathname: '/poducts',
+    //   query:{[fieldName]: e.target.value}
+    // })
   }
-  // console.log('query', query )
+
 
   return (
     <div className={style.searchStyle}>
@@ -99,7 +84,7 @@ const SearchForm: React.FC<SearchFormPropsType> = ({
 
           <TextField type='text' label='Search product' name='product' onChange={(e) => handleFieldChange(e, 'product')}
                      onBlur={handleBlur}
-                     value={values.product}/>
+                     value={values.product} />
 
           {touched.search && errors.search && <p>{errors.search}</p>}
 
@@ -123,18 +108,15 @@ const SearchForm: React.FC<SearchFormPropsType> = ({
                 value={formik.values.category}
               >
                 <MenuItem value={"All category"}>All category</MenuItem>
-                {categoriesData.map(category => <MenuItem key={category}
-                                                          value={category}> {category} </MenuItem>)}
+                {categoriesData.map(category => <MenuItem key={category} value={category}> {category} </MenuItem>)}
               </Select>
             </FormControl>
-            {<Button style={buttonStyle} variant='contained' type="button" onClick={changeUrl}>Go to main
-              page</Button>}
+            {<Button style={buttonStyle} variant='contained' type="button" onClick={changeUrl}>
+              Go to main page
+            </Button>}
           </div>
         </form>
       </div>
-
-
-
     </div>
   )
 }
@@ -143,9 +125,3 @@ const SearchForm: React.FC<SearchFormPropsType> = ({
 export default SearchForm;
 
 
-//   {
-// <select onChange={(e) => handleCategory(e)} value={filteredCategorySelector}>
-//       <option value="All category"> All category</option>
-//    {categoriesData.map(category => <option key={category} value={category}> {category} </option>)}
-// </ select>
-//   }

@@ -1,3 +1,4 @@
+// @ts-ignore
 import axios from 'axios'
 import {ProductsDataType} from '../Components/redux/products-Reducer'
 

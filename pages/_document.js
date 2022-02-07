@@ -5,7 +5,7 @@ export default function MyDocument() {
     return (
         <Html>
             <Head>
-                <title>Store products of Amazon</title>
+                {/*<title>Store products of Amazon</title>*/}
                 <meta name='Products Amazon' content='product, amazon, ukraine'/>
                 <meta name='description' content='store products'/>
                 <meta charSet='utf-8'/>
