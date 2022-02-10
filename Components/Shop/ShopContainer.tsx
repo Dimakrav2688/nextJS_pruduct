@@ -40,7 +40,10 @@ const Shop = () => {
   const dispatch = useDispatch()
 
   const changeUrl = () => {
-    window.location.search = '';
+    router.push('/')
+    formik.setFieldValue('product', '')
+    formik.setFieldValue('category', '')
+    // formik.resetForm()
   }
 
   const formik = useFormik({
@@ -67,7 +70,7 @@ console.log("product", router.query.product)
   useEffect(() => {
     const includeCategory: boolean = formik.values.category === "All category"
     const updatedProducts = productsData.filter((product: ProductsDataType) =>
-      product.name.includes(formik.values.product) && (includeCategory ? true : product.bsr_category.includes(formik.values.category)))
+      product.name.toLowerCase().includes((formik.values.product as string).toLowerCase()) && (includeCategory ? true : product.bsr_category.includes(formik.values.category)))
     setFilteredArr(updatedProducts)
   }, [formik.values, productsData, router.query])
 

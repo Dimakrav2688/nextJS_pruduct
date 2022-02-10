@@ -7,14 +7,16 @@ import Product from "../Components/Shop/Product.tsx";
 const SinglePage = ({product}) => {
 
     const router = useRouter();
-    const key = router.query.singleProduct;
+
     return (
         <div>
             <Head>
                 <title>Store products of Amazon</title>
-                <meta name='Products Amazon' content='product, amazon, ukraine'/>
-                <meta name='description' content='store products'/>
-                <meta charSet='utf-8'/>
+                <meta name='og:title' content={product.name}/>
+                <meta name='twitter:title' content={product.name}/>
+                <meta name='description' content='By best product in Amazon shop! iphone. ipad. product for home'/>
+                <meta name='Robots' content=''/>
+                 <meta charSet='utf-8'/>
             </Head>
             <Product product={product}/>
         </div>
@@ -27,7 +29,7 @@ export async function getServerSideProps(context) {
     const data = await res.json()
 
     const product = data.products.find(dataProduct => dataProduct.asin === context.query.singleProduct)
-
+console.log(context)
     return {props: {product}}
 }
 

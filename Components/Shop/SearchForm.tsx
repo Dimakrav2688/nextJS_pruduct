@@ -70,10 +70,10 @@ const SearchForm: React.FC<SearchFormPropsType> = ({
 
   const handleFieldChange = (e: any, fieldName: string) => {
     formik.handleChange(e)
-    // router.push({
-    //   pathname: '/poducts',
-    //   query:{[fieldName]: e.target.value}
-    // })
+    router.push({
+      pathname: '/',
+      query:{[fieldName]: e.target.value}
+    })
   }
 
 
@@ -86,7 +86,7 @@ const SearchForm: React.FC<SearchFormPropsType> = ({
                      onBlur={handleBlur}
                      value={values.product} />
 
-          {touched.search && errors.search && <p>{errors.search}</p>}
+          {touched.product && errors.product && <p>{errors.product}</p>}
 
           <Button
             color="primary"
@@ -97,7 +97,7 @@ const SearchForm: React.FC<SearchFormPropsType> = ({
             {t("Search_product")}
           </Button>
 
-          <div>
+          <div className={style.category}>
             <FormControl style={selectStyle}>
               <InputLabel id='categories'>All category </InputLabel>
               <Select
@@ -105,7 +105,7 @@ const SearchForm: React.FC<SearchFormPropsType> = ({
                 id={filteredCategorySelector}
                 name="category"
                 onChange={(e: any) => handleFieldChange(e, 'category')}
-                value={formik.values.category}
+                value={values.category}
               >
                 <MenuItem value={"All category"}>All category</MenuItem>
                 {categoriesData.map(category => <MenuItem key={category} value={category}> {category} </MenuItem>)}

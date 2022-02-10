@@ -34,7 +34,7 @@ let Product: React.FC<IProps> = ({product}: IProps) => {
           />
           <CardContent>
             <Link href={`/[singleProduct]`} as={`/${product.asin}` }>
-              <a target="_blank">
+              <a>
                 <Typography component='h6'>
                 {product.name}
               </Typography>
